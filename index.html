@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=0.1">
+
+        <title>PESA | Student Finance</title>
+        <link rel="stylesheet" href="styles/main.css">
+
+    </head>
+
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+
+        <header class="topbar">
+            <div class="brand">
+                <span class="logo" aria-hidden="true">P</span>
+                <span>PESA</span>
+            </div>
+
+            <button class="btn" id="exportTop" aria-label="Export data as json" title="Export data">Export</button>
+
+        </header>
+        <nav class="sidebar" aria-label="Main navigation">
+            <button class="active" dataview="dashboard" title="Dashboard" aria-label="Dashboard" aria-current="page"></button>
+            <button data-view="transactions" title="Transactions" aria-label="Transactions"></button>
+            <button data-view="add" title="Add Expense" aria-label="Add Expenses"></button>
+            <button data-view="settings" title="settings" aria-label="Settings" aria-label="Settings"></button>
+            <button data-view="about" title="About" aria-label="About"></button>
+        </nav>
+
+       <main id="main" tabindex="-1">
+        
+        <!---- DASHBOARD ---->
+       <section id="dashboard" class="view active" aria-labelledby="dashboardTitle">
+        <div class="heading">
+            <div class="eyebrow">Student Finance</div>
+            <h1 id="dashboardTitle">Dashboard</h1>
+            <p class="subtitle">Your money, organized and under control.</p>
+        </div>
+        
+        <div class="stats">
+            <article class="card stat">
+                <div class="stat-label">Total spending</div>
+                <div class="stat-value" id="totalSpending">Tsh 0</div>
+                <div class="small" id="totalConverted">All recorded expenses</div>
+            </article>
+            <article class="card stat">
+                <div class="stat-label">Top category</div>
+                <div class="stat-value" id="topCategory">-</div>
+                <div class="small" >Highest spending category</div>
+            </article>
+            <article class="card stat">
+                <div class="stat-label">Cap Used</div>
+                <div class="stat-value" id="budgetPercent">0%</div>
+                <div class="small" id="budgetSmall">Set a cap in Settings</div>
+            </article>
+        </div>
+
+        <div class="dashboard-grid">
+            <section class="card panel wide" aria-labelledby="trendTitle">
+                <div class="panel-head">
+                    <div>
+                        <h2 id="trendTitle">Spending Overview</h2>
+                        <p class="muted small">Last 7 days</p>
+                    </div>
+                    </div>
+                    <div class="chart" id="trendChart" role="img" aria-label="Bar chart of spending over the last seven days"></div>
+                    <p class="sr-only" id="trendSummary"></p>
+            </section>        
+            <section class="card pannel" aria-labelledby="capTitle">
+                <div class="panel-head">
+                    <h2 id="capTitle">Spending Cap</h2>
+                    <button class="btn small-btn" data-view="settings">Edit</button>
+                </div>
+                <div class="stat-value" id="budgetDisplay">TSh 0</div>
+                        <div class="progress">
+                            <div class="progress-bar" id="budgetBar"></div>
+                        </div>
+                        <p class="muted small" id="capPolite" role="status"></p>
+                        <p class="small cap-alert"></p>
+            </section>
+            <section class="card panel" aria-labelledby="catTittle">
+                <div class="panel-head">
+                    <h2 id="catTittle">Top Categories</h2>
+                    <button class="btn small-btn" data-view="transactions">See all</button>
+                </div>
+                <div id="categoriesList"></div>
+            </section>
+            <section class="card panel wide" aria-labelledby="recentTitle">
+                <div class="panel-head">
+                    <div>
+                        <h2 id="recentTitle">Recent Transactions</h2>
+                        <p class="muted small">Your latest spending</p>
+                    </div>
+                    <button class="btn primary small-btn" data-view="add">+ Add Expense</button>
+                 </div>
+                 <div id="recentTransactions"></div>
+            </section>
+        </div>
+       </section>
+
+       <!---- TRANSACTIONS-->
+       <section id="transactions" class="view" aria-labellerdby="transactionsTitle">
+            <div class="heading">
+                <div class="eyebrow">RECORDS</div>
+                <h1 id="transactionsTitle">Transactions</h1>
+                <p class="subtitle">Search with regex, sort, edit and amanage ypur expenses</p>
+            </div>
+            <div class="toolbar">
+                <div>
+                    <label for="search">Search(regex allowed)</label>
+                <input id="search" type="search" placeholder="e.g. (coffee|tea)" autocomplete="off">
+                </div>
+                <div>
+                    <label for="sort">Sort by</label>
+                    <select id="sort">
+                        <option value="newest">Date: newest</option>
+                        <option value="oldest">Date: oldest</option>
+                        <option value="az">Description: A-Z</option>
+                        <option value="high">Amount: High to low</option>
+                        <option value="low">Amount: low to high</option>
+                    </select>
+                </div>
+                <label class="check">
+                    <input type="checkbox" id="classToggle" checked> Ignore case</label>
+                    <button class="btn primary" dta-view="add">+ Add Expense</button>
+            </div>
+            <p id ="searchStatus" role="status" class="muted small"></p>
+
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Transactions table, scrollable">
+                <table >
+                    <caption class="sr-only">List of expenses</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsBody"></tbody>
+                </table>
+            </div>
+            <p id="emptyMessage" class="muted empty">No transaction found.</p>"
+       </section>
+
+       <!---- ADD ---->
+       
+
+
+       </main>
+    </body>
+</html>
