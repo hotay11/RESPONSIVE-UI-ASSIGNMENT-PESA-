@@ -14,7 +14,7 @@ function localDate(d){
 }
 
 function money(amount) {
-    return state.settings.baseCurrency + "" + Number(amount).toLocaleString("en-US",{ maximumFractionDigits: 2});
+    return state.settings.baseCurrency + " " + Number(amount).toLocaleString("en-US",{ maximumFractionDigits: 2});
 }
 
 let toastTimer;
@@ -55,7 +55,7 @@ function renderDashboard() {
 
     $("totalSpending").textContent = money(total);
     $("totalRecords").textContent = records.length;
-    $("totalConverted").textContent = state.settings.currencies.map(c => c.code + "" + (total + c.rate).toFixed(2)).join(" . ");
+    $("totalConverted").textContent = state.settings.currencies.map(c => c.code + " " + (total + c.rate).toFixed(2)).join(" . ");
 
     const totals = {};
     records.forEach(r =>  { totals[r.category] = (totals[r.category] || 0) + r.amount;});
@@ -67,7 +67,7 @@ function renderDashboard() {
     const cap = state.settings.budget;
     const percent = cap ? total / cap * 100 : 0;
     $("budgetPercent").textContent = Math.round(percent) + "%";
-    $("budgetSmall").textContent = money(Math.max(0, cap - total)) + "remaining";
+    $("budgetSmall").textContent = money(Math.max(0, cap - total)) + " remaining";
     $("budgetDisplay").textContent = money(total) + "/" + money(cap);
     $("budgetBar").style.width = Math.min(percent, 100) + "%";
     $("budgetBar").classList.toggle("over", total > cap );

@@ -32,5 +32,6 @@ function highlight(text, re) {
 out += escapeHtml(text.slice(last, m.index)) + "<mark>" + escapeHtml(m[0]) + "</mark>";
 last = m.index + m[0].length;
 }
-return out + escapeHtml, compileRegex, highlight };
+return out + escapeHtml(text.slice(last));}
+return { escapeHtml, compileRegex, highlight };
     })();

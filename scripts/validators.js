@@ -53,7 +53,6 @@ function validateCurrencyCode(v) {
         if (typeof r.amount !== "number" || !rules.amount.test(String(r.amount))) return n + "bad amount.";
         if (typeof r.date !== "string" || validateDate(r.date)) return n + "bad date";
         if (typeof r.category !== "string" || ! rules.category.test(r.category)) return n + "bad category.";
-        if (typeof r.createdAt !== "string" || typeof r.updatedAt !== "string") return n + "missing timestamps.";
     }
     return "";
  }

@@ -1,4 +1,4 @@
-const store = (() => {
+const Store = (() => {
     function load(key, fallback) {
         try{
             const raw = localStorage.getItem(key);

@@ -2,14 +2,14 @@
 {
     "id": "rec_0001", 
     "description": "lunch",
-    "amount": "5000",
-    "category":"food",
+    "amount": 5000,
+    "category":"Food",
     "date": "2026-10-08"
 },
 {
     "id": "rec_0002",
     "description": "Textbooks",
-    "amount": "25000",
+    "amount": 25000,
     "category": "Books",
     "date": "2026-10-07"
 },
@@ -23,15 +23,15 @@
 {
     "id": "rec_0004",
     "description": "Coffee",
-    "amount": "8500",
+    "amount": 8500,
     "category": "Food",
     "date": "2026-10-11"
-}
+},
 {
     "id": "rec_0005",
     "description": "Registration fees",
-    "amount": "15000",
-    "category": "fees",
+    "amount": 15000,
+    "category": "Fees",
     "date": "2026-10-10"
 }
 ]
