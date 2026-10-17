@@ -93,7 +93,7 @@ select[aria-invalid="true"]
 .sidebar{
      display: none;
      width: 82px;
-     padding: 18px, 10px;
+     padding: 18px 10px;
      position: fixed;
      top: 68px;
      bottom: 0;
@@ -499,11 +499,10 @@ footer{
     .topbar{
         margin-left: 82px;
         padding: 0 22px;}
-}
 main{
     margin-left: 82px;
     width: calc(100% - 82px);
-    padding-bottom: 34px 35px 40px;
+    padding: 34px 35px 40px;}
 footer{
     margin-left: 82px;
     padding-bottom: 30px;

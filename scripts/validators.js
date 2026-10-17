@@ -7,7 +7,7 @@ const Validators = (() => {
         duplicateWord: /\b(\w+)\s+\1\b/i,
         doubleSpace: /\s{2,}/,
         currencyCode: /^[A-Za-z]{2,5}$/,
-        rate: /^(0|[1-9]\d*)(\. \d{1,8})?$/
+        rate: /^(0|[1-9]\d*)(\.\d{1,8})?$/
 };
 
 // Each validator returns "" when OK or an error message.
