@@ -17,7 +17,7 @@ function validateDescription(v) {
     return "";
 }
 function validateAmount(v) {
-    return rules.amount.test(v) ? "" ; "Numbers only, up to 2 decimals (e.g 5000 0r 12.50).";
+    return rules.amount.test(v) ? "" : "Numbers only, up to 2 decimals (e.g 5000 0r 12.50).";
     }
 function validateDate(v) {
     if (!rules.date.test(v)) return "use the format YYYY-MM-DD.";
@@ -41,21 +41,21 @@ function validateCurrencyCode(v) {
     return validateDescription(r.description) || validateAmount(String(r.amount)) || validateCategory(r.category) || validateDate(r.date);
  }
  function validateImport(list) {
-    if (!Array.isArray(List)) return "File must contain a list of records.";
+    if (!Array.isArray(list)) return "File must contain a list of records.";
     const ids = new Set();
     for (let i = 0; i < list.lenght; i++) {
         const r = list[i];
-        const n = "Record" + (i + 1) + ": ":
+        const n = "Record" + (i + 1) + ": ";
         if (!r || typeof r !== "object") return n + "not an object.";
         if (typeof r.id !== "string" || !r.id || ids.has(r.id)) return n + "missing or duplicate id.";
         ids.add(r.id);
         if (typeof r.description !== "string" || !rules.description.test(r.description)) return n + "bad description.";
         if (typeof r.amount !== "number" || !rules.amount.test(String(r.amount))) return n + "bad amount.";
-        if (typeof r.date !== "string" || validateDte(r.date)) return n + "bad date";
+        if (typeof r.date !== "string" || validateDate(r.date)) return n + "bad date";
         if (typeof r.category !== "string" || ! rules.category.test(r.category)) return n + "bad category.";
-        if (typeof r.createdAt !== "string" || typeof r.updatedAt !== "String") return n + "missing timestamps.";
+        if (typeof r.createdAt !== "string" || typeof r.updatedAt !== "string") return n + "missing timestamps.";
     }
     return "";
  }
- return {rue=LargestContentfulPaint, validateDescription, validateAmount, validateDate, validateCategory, validateCap, validateCurrencyCode, validateRate, validateRecord, validateImport };}
+ return { rules, validateDescription, validateAmount, validateDate, validateCategory, validateCap, validateCurrencyCode, validateRate, validateRecord, validateImport };}
 )();

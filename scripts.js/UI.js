@@ -10,7 +10,7 @@ function setText(el, text) {
 
 function localDate(d){
     d = d || new Date();
-    return d.getFullYear() + "-" + String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2, "0");
 }
 
 function money(amount) {
@@ -28,7 +28,7 @@ function message(text){
         toast.textContent = "";}, 2500);
 }
 
-function showView(id) { document.querySelectedAll(".view").forEach(v => v.classList.add("active"));
+function showView(id) { document.querySelectorAll(".view").forEach(v => v.classList.add("active"));
     $(id).classList.add("active");
 
     document.querySelectorAll("[data-view]").forEach(button => {
@@ -39,7 +39,7 @@ function showView(id) { document.querySelectedAll(".view").forEach(v => v.classL
         if (on) button.setAttribute("aria-current", "page");
         else button.removeAttribute("aria-current");});
 
-       if (id === "settings") renderSeetings();
+       if (id === "settings") renderSettings();
        if (id === "transactions") renderTransactions();
 
        const h1 = $(id).querySelector("h1");
@@ -60,7 +60,7 @@ function renderDashboard() {
     const totals = {};
     records.forEach(r =>  { totals[r.category] = (totals[r.category] || 0) + r.amount;});
     const sorted = Object.keys(totals).sort((a,b)=> totals[b] - totals[a]);
-    $("topCategory").textContent = sorted [0] || "-";}
+    $("topCategory").textContent = sorted [0] || "-";
 
 
     //cap
@@ -107,13 +107,13 @@ function renderDashboard() {
  $("trendChart").innerHTML = days.map(d => ` 
     <div class="bar-wrap" title="${d.label}: ${money(d.total)}">
     <div class="bar" style="height:${Math.max(3, d.total / max * 100)}%"></div>
-    <span class="bar-label">$ {d,label.slice(0,3)}</span></div>`).join("");
+    <span class="bar-label">${d,label.slice(0,3)}</span></div>`).join("");
     $("trendSummary").textContent = "Spending last 7 days: "+ days.map(d => d.label + "" + money(d.total)).join(",");
 
 
 // recent transactions
 const recent = records.slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0,5);
-$("recentTransactions").innerHtml = recent.map(r => `
+$("recentTransactions").innerHTML = recent.map(r => `
     <div class="recent-row">
     <div> <strong> ${escapeHtml(r.description)}</strong>
     <div class="small muted">${escapeHtml(r.category)} . ${escapeHtml(r.date)}</div>
@@ -121,9 +121,9 @@ $("recentTransactions").innerHtml = recent.map(r => `
     <strong>-${money(r.amount)}</strong></div>`).join("") || `<p class="muted">No transactions yet.</p>`;}
 
     const sorters = {
-    newest: (a,b) => b.date.localCompare(a.date),
+    newest: (a,b) => b.date.localeCompare(a.date),
     oldest: (a,b) => a.date.localeCompare(b.date),
-    az: (a,b) => a.descriptiption.localeCompare(b.description),
+    az: (a,b) => a.description.localeCompare(b.description),
     za: (a,b) => b.description.localeCompare(a.description),
     high: (a,b) => b.amount - a.amount,
     low: (a,b) => a.amount -b.amount};
@@ -139,31 +139,31 @@ $("recentTransactions").innerHtml = recent.map(r => `
     return `
     <tr id="editRow" data-id="${escapeHtml(r.id)}">
         <td><input id="editDesc" aria-label="Description" value="${escapeHtml(r.description)}"></td>
-       <td><input id ="editDesc" aria-label="Description" values="${escapeHtml(r.description)}"></td>
+       <td><input id ="editDesc" aria-label="Description" value="${escapeHtml(r.description)}"></td>
         <td><select id ="editCat" aria-label="Categpry">${options}</select></td>
-        <td><input id ="editAmount" aria-label="Amount" inputmode="decimal" values="${r.amount}"></td>
+        <td><input id ="editAmount" aria-label="Amount" inputmode="decimal" value="${r.amount}"></td>
         <td><button class="btn primary small-btn" data-save="1">Save</button>
         <button class="btn small-btn" data-cancel="1">Cancel</button>
         <div  class="field-error" id="editError" role="alert"></div></td>
-    </tr>;
+    </tr>`;
     }
- function renderTransaction(){
- const result= Search.compileRegex($("search").vaule, $("caseToggle".checked ? "i" : "");
- cont re = result,re;
- const list - state.records.filter(r = !re || re.test(`${r.description}
+ function renderTransactions(){
+ const result= Search.compileRegex($("search").value, $("caseToggle").checked ? "i" : "");
+ const re = result.re;
+ const list = state.records.filter(r = !re || re.test(`${r.description}
  ${r.category}$ {r.amount.tofixed(2) $(r.date}`))
     .sort(sorters[$("sort").value]);
 
-    setText($("searchStatus"), result.error || (re ? listlength + " result(s) found" : "" ));
-    $("transactionsBody").innerHtml = list.map(r => r.id === inlineEditId ? editRow(r) : `
+    setText($("searchStatus"), result.error || (re ? list.length + " result(s) found" : "" ));
+    $("transactionsBody").innerHTML = list.map(r => r.id === inlineEditId ? editRow(r) : `
     <tr>
         <td>${Search.highlight(r.date, re)}</td>
         <td>${Search.highlight(r.description, re)}</td>
-        <td><span class="pill">${Search.highlight(r.categpry,re)}</span></td>
-        <td><strong>$ {escapeHtml(state.settings.baseCurrency)} $ {Search.hightlight(r.amount.toFixed(2), re)}</strong></td>
-        <td><button class="btn small-btn" data-edit="${escapeHtnl(r.id)}">Edit</button>
-        <button class="btn danger small-btndata-delete="${escapeHtml(r.id)}"
-        aria-label="Delete $ {escapeHtml(r.description)}">Delete</button>
+        <td><span class="pill">${Search.highlight(r.category,re)}</span></td>
+        <td><strong>${escapeHtml(state.settings.baseCurrency)} ${Search.hightlight(r.amount.toFixed(2), re)}</strong></td>
+        <td><button class="btn small-btn" data-edit="${escapeHtml(r.id)}">Edit</button>
+        <button class="btn danger small-btn" data-delete="${escapeHtml(r.id)}"
+        aria-label="Delete ${escapeHtml(r.description)}">Delete</button>
         </td>
         </tr>`).join("");
         $("emptyMessage").style.display =list.length ? "none" : "block";
@@ -172,16 +172,15 @@ $("recentTransactions").innerHtml = recent.map(r => `
      function renderCategoryOptions() {
      const select =$("category");
      const previous = select.value;
-     select.innerHTML = state.settings.categpries.map(c => `option value=$ {escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
-     if (state.settings.categpries.includes(prevoius))Selection.valu = previous;}
+     select.innerHTML = state.settings.categories.map(c => `<option> value=$ {escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+     if (state.settings.categories.includes(previous))select.value= previous;}
     
-     function renderCategpryList() {
-    $("settingsCategoryList() {
+     function renderCategoryList() {
     $("settingsCategories").innerHTML = state.settings.categories.map((c,i) => ` 
-    <div class="settind-row flex">
-        <spam>${escapeHtml(c)} </span>
+    <div class="setting-row flex">
+        <span>${escapeHtml(c)} </span>
        <button class ="btn danger small-btn"
-       data-remove="${i}" aria-label="Remove category $ {escaoeHtml(c)}">Remove</button>
+       data-remove="${i}" aria-label="Remove category ${escapeHtml(c)}">Remove</button>
        </div>`).join("");}
 
      function renderSettings(){
@@ -190,16 +189,16 @@ $("recentTransactions").innerHtml = recent.map(r => `
         $("baseCurrency").value = s.baseCurrency;
         $("cur1Code").value = s.currencies[0].code;
         $("cur1Rate").value = s.currencies[0].code;
-        $("cur2Code").value = s.currencies[0].code;
-        $("cur2Rate").value = s.currencies[1].rate;
+        $("cur2Code").value = s.currencies[1].code;
+        $("cur2Rate").value = s.currencies[1].code;
         $("settingsError").textContent = ""; renderCategoryList();
      }
 
 
-     function renderAll{
+     function renderAll(){
         renderDashboard();
         renderTransactions();
         renderCategoryOptions();
      }
-      return { $,message,localDate, showView, renderDashboard, renderTransactions, renderCategoryOptions,renderSettings, renderAll, setInlineEdit }:
+      return { $,message,localDate, showView, renderDashboard, renderTransactions, renderCategoryOptions,renderSettings, renderAll, setInlineEdit };
 })();

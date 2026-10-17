@@ -9,12 +9,12 @@ const State = (() => {
     }
 
     function readSettings() {
-        const saved = Store.load("pesa:serrings", {});
+        const saved = Store.load("pesa:settings", {});
         const ok = saved && typeof saved === "object" && !Array.isArray(saved);
         const d= freshDefaults();
         const s = Object.assign(freshDefaults(), ok? saved : {});
         if (!Array.isArray(s.currencies) || s.currencies.length<2) s.currencies = d.currencies;
-        if (!Array.isArray(s.categories) || s.categories.length ==0) s.categories = d.categories;
+        if (!Array.isArray(s.categories) || s.categories.length == 0) s.categories = d.categories;
         if (typeof s.budget !== "number") s.budget =d.budget;
         if (typeof s.baseCurrency !== "string") s.baseCurrency = d.baseCurrency;
         return s; 
@@ -23,7 +23,7 @@ const State = (() => {
     function readRecords() {
         const saved = Store.load("pesa:records", null);
             if (!Array.isArray(saved)) return null;
-            return saved.filter(r => r && typeof r.id === "string" && typeof r.description === " string" && typeof r.amount === "number" && typeof r.date === "string" && typeof r.category === "string");
+            return saved.filter(r => r && typeof r.id === "string" && typeof r.description === "string" && typeof r.amount === "number" && typeof r.date === "string" && typeof r.category === "string");
     }
    const state = { records: readRecords(), settings: readSettings()};
 
@@ -36,13 +36,13 @@ async function loadSeed() {
         const res = await fetch("seed.json");
         const data = await res.json();
         return Array.isArray(data) ? data : [];
-    }catch (e) {return []; e.g. opened without a server}
+    }catch (e) {return []; }
 }
 
 function nextId() {
      const nums = state.records.map(r => Nymber(String(r.id).replace ("rec_", "")) || 0);
      let n =Math.max(0, ...nums) + 1;
-     while (state.records.some(r => r.id === "rec" + string(n).padStart(4, "0"))) n++;
+     while (state.records.some(r => r.id === "rec_" + string(n).padStart(4, "0"))) n++;
      return "rec_" + string(n).padStart(4, "0");
 }
 

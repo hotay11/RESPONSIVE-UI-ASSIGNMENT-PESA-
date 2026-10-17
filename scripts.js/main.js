@@ -46,7 +46,7 @@ function resetForm(){
 
 $("expenseForm").addEventListener("submit", event => {
     event.preventDefault();
-    const allOk = fields.atmao(([id, fn ]) => checkField(id, fn)).every(Boolean):
+    const allOk = fields.atmao(([id, fn ]) => checkField(id, fn)).every(Boolean);
     if (!allOk) {
         message("Please fix the errors in the form.");
         return;
@@ -146,16 +146,16 @@ $("transactionBody").addEventListener("keydown", event => {
 $("saveSettings").addEventListener("click", () => {
     const cap = $("budgetInput").value.trim();
     const base = $("baseCurrency").value.trim();
-    const c1 = $("cur1Code").value.trim(), r1 = $ ("cur2Rate").value.trim();
+    const c1 = $("cur1Code").value.trim(), r1 = $("cur2Rate").value.trim();
+    const c2 = $("cur2Code").value.trim(), r2 = $("cur2Rate").value.trim();
 
-    const error = V.validateCap(cap) || V.validateCurrencyCodes(base) || V.validateCurrencyCode(c1) || V.valodateRate(r2);
-     $("settinngsError").textContent = erros;
+    const error = V.validateCap(cap) || V.validateCurrencyCodes(base) || V.validateCurrencyCode(c1) || V.validateRate(r1) || V.validateRate(r2);
+     $("settinngsError").textContent = error;
      if (error) return;
 
      state.settings.budget = Number(cap);
-     state.settings.baseCurrensy = base;
-     state.settings.currencies = [{code: c1.toUpperCase(), rate: Number(r1)}, 
-        {code: c2.toUpperCase(), rate: Number(r2)}
+     state.settings.baseCurrency = base;
+     state.settings.currencies = [{code: c1.toUpperCase(), rate: Number(r1)}, {code: c2.toUpperCase(), rate: Number(r2)}
      ];
      State.persist();
      renderAll();
@@ -163,10 +163,10 @@ $("saveSettings").addEventListener("click", () => {
 });
 
 //settings: categories
-$("addCategpry").addEventListener("Click", () => {
-    const name = $("newCategpry").value;
+$("addCategpry").addEventListener("click", () => {
+    const name = $("newCategory").value;
     const msg = V.validateCategory(name);
- const exists = state.settings.categoris.some(c > c.toLowerCase() ===name.tolowerCase());
+ const exists = state.settings.categories.some(c => c.toLowerCase() ===name.toLowerCase());
 $("newCategoryError").textContent = msg || (exists ? "That categpry already exists." : "");
 if (msg || exists) return;
 
@@ -180,7 +180,7 @@ message("Category added.");
 });
 
 
-$("settingsCategpries").addEventListener("click" , event => {
+$("settingsCategories").addEventListener("click" , event => {
     const button = event.target.closest("[data-remove]");
     if (!button) return;
     if (state.settings.categpries.length < 2) {
@@ -188,7 +188,7 @@ $("settingsCategpries").addEventListener("click" , event => {
         return;
     }
     
-    const index = Number(buttin.dataset.remove);
+    const index = Number(button.dataset.remove);
     const name = state.settings.categories[index];
     if (confirm('remove category "' + name + '"? aeaxisting expenses keep this category.'))
     { state.settings.categories.splice(index, 1);
@@ -211,26 +211,26 @@ $("importFile").addEventListener("change" , async event => {
     const file = event.target.files[0];
     if (!file) return;
     try {
-        const data = JSON.parsel(await file.text());
+        const data = JSON.parse(await file.text());
         const error = V.validateImport(data);
         if (error) throw new Error(error);
-        if (confirm("Relace your current records with"+ data.lenght + "imported records?")) {
+        if (confirm("Replace your current records with"+ data.length + "imported records?")) {
             state.records = data;
-            sratepersist();
+            state.persist();
             renderAll();
             $("importMessage").textContent = "Imported " + data.length + "records.";}
             else{
-                $("importMessage").textContent - "import cancelled.";
+                $("importMessage").textContent = "import cancelled.";
 
         }
     } catch (err) {
         $("importMessage").textContent = "Import failed: " + err.message; }
-        event.target.value = "",
+        event.target.value = "";
 
     });
 
     $("resetBtn").addEventListener("click", async () => {
-        if (!confirm("Reset PESA to its starter data? This repleces you records and settings."))
+        if (!confirm("Reset PESA to its starter data? This replaces, you records and settings."))
             return;
         state.records = await State.loadSeed();
         State.resetDefaults();
