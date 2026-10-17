@@ -6,7 +6,8 @@ const Validators = (() => {
         category: /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/,
         duplicateWord: /\b(\w+)\s+\1\b/i,
         doubleSpace: /\s{2,}/,
-        currencyCode: /^(0|[1-9]\d*)(\. \d{1,8})?$/
+        currencyCode: /^[A-Za-z]{2,5}$/,
+        rate: /^(0|[1-9]\d*)(\. \d{1,8})?$/
 };
 
 // Each validator returns "" when OK or an error message.
@@ -43,7 +44,7 @@ function validateCurrencyCode(v) {
  function validateImport(list) {
     if (!Array.isArray(list)) return "File must contain a list of records.";
     const ids = new Set();
-    for (let i = 0; i < list.lenght; i++) {
+    for (let i = 0; i < list.length; i++) {
         const r = list[i];
         const n = "Record" + (i + 1) + ": ";
         if (!r || typeof r !== "object") return n + "not an object.";

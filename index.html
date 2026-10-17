@@ -46,6 +46,12 @@
                 <div class="small" id="totalConverted">All recorded expenses</div>
             </article>
             <article class="card stat">
+                <div class="stat-label">Transactions</div>
+                <div class="stat-value" id="totalRecprds">0</div>
+                <div class="small"> Saved records</div>
+            </article>
+
+            <article class="card stat">
                 <div class="stat-label">Top category</div>
                 <div class="stat-value" id="topCategory">-</div>
                 <div class="small" >Highest spending category</div>
@@ -212,6 +218,8 @@
                 <div class="setting-row">
                     <label for="cur2Code" inputmode="decimals">Currency 3 code</label>
                     <input id="cur2Code" max-length="5">
+                    <label for="cur2Rate">1 base = ? of currency 3</label>
+                    <input id="cur2Rate" inputmode="decimal">               
                 </div>
                 <div class="field-error" id="settingsError" role="alert"></div>
                 <div class="button-row">
@@ -285,11 +293,11 @@
         <button data-view="about">i<br>About</button>
     </nav>
     <div id="status" class="status" role="status"></div>
+    <script src="scripts/store.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/state.js"></script>
-    <script src="scripts/store.js"></script>
-    <script src="scripts/UI.js"></script>
     <script src="scripts/validators.js"></script>
+    <script src="scripts/UI.js"></script>
     <script src="scripts/main.js"></script>
     </body>
 </html>

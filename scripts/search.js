@@ -15,7 +15,7 @@ const Search = (() => {
         if (!input) return {
             re: null, error: ""};
             try{return {re: new RegExp(input, flags), error: ""};
-        } catch (e) {return{ re: null, erorr: "invalid pattern.Check your brackets and slashes."};}
+        } catch (e) {return{ re: null, error: "invalid pattern.Check your brackets and slashes."};}
     }
 
 //wraps matches in <mark>, Everything escaped first so its safe.

@@ -40,22 +40,22 @@ async function loadSeed() {
 }
 
 function nextId() {
-     const nums = state.records.map(r => Nymber(String(r.id).replace ("rec_", "")) || 0);
+     const nums = state.records.map(r => Number(String(r.id).replace ("rec_", "")) || 0);
      let n =Math.max(0, ...nums) + 1;
-     while (state.records.some(r => r.id === "rec_" + string(n).padStart(4, "0"))) n++;
-     return "rec_" + string(n).padStart(4, "0");
+     while (state.records.some(r => r.id === "rec_" + String(n).padStart(4, "0"))) n++;
+     return "rec_" + String(n).padStart(4, "0");
 }
 
 function addRecord(data) {
     const now = new Date().toISOString();
-    state.records.push(object.assign({ id: nextId() }, data,{  CreatedAt: now, updateAt: now }));
+    state.records.push(object.assign({ id: nextId() }, data,{  CreatedAt: now, updatedAt: now }));
 persist();
 } 
 
 function updateRecord(id,data) {
     const rec = state.records.find(r => r.id === id);
     if (!rec) return;
-    object.assign(rec, data, { updateAt: new Date().toISOString()});
+    Object.assign(rec, data, { updatedAt: new Date().toISOString()});
     persist();
 }
 function deleteRecord(id) {

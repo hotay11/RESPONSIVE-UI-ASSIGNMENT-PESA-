@@ -201,7 +201,7 @@ $("settingsCategories").addEventListener("click" , event => {
 
 // import/ export /reset
 function exportData() {
-    store.downloadJSON(state.records, "pesa-data.json");
+    Store.downloadJSON(state.records, "pesa-data.json");
     message("data exported.");
 }
 
@@ -216,7 +216,7 @@ $("importFile").addEventListener("change" , async event => {
         if (error) throw new Error(error);
         if (confirm("Replace your current records with"+ data.length + "imported records?")) {
             state.records = data;
-            state.persist();
+            State.persist();
             renderAll();
             $("importMessage").textContent = "Imported " + data.length + "records.";}
             else{

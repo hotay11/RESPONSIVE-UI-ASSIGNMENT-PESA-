@@ -55,7 +55,7 @@ function renderDashboard() {
 
     $("totalSpending").textContent = money(total);
     $("totalRecords").textContent = records.length;
-    $("totalConverted").textContent = state.settings.currencies.map(c => c.code + " " + (total + c.rate).toFixed(2)).join(" . ");
+    $("totalConverted").textContent = state.settings.currencies.map(c => c.code + " " + (total * c.rate).toFixed(2)).join(" . ");
 
     const totals = {};
     records.forEach(r =>  { totals[r.category] = (totals[r.category] || 0) + r.amount;});
@@ -82,7 +82,7 @@ function renderDashboard() {
 
         //categories
     const biggest = Math.max(1, ...Object.values(totals));
-    $("categoriesLists").innerHTML = sorted.slice(0, 5).map(c => `
+    $("categoriesList").innerHTML = sorted.slice(0, 5).map(c => `
         <div class="category">
             <div class="category-top">
                 <span>${escapeHtml(c)}</span>
@@ -107,7 +107,7 @@ function renderDashboard() {
  $("trendChart").innerHTML = days.map(d => ` 
     <div class="bar-wrap" title="${d.label}: ${money(d.total)}">
     <div class="bar" style="height:${Math.max(3, d.total / max * 100)}%"></div>
-    <span class="bar-label">${d,label.slice(0,3)}</span></div>`).join("");
+    <span class="bar-label">${d.label.slice(0,3)}</span></div>`).join("");
     $("trendSummary").textContent = "Spending last 7 days: "+ days.map(d => d.label + "" + money(d.total)).join(",");
 
 
@@ -133,13 +133,13 @@ $("recentTransactions").innerHTML = recent.map(r => `
     inlineEditId = id; }
 
     function editRow(r) {
-    const cats = state.settings.categories.include(r.category) ? state.settings.categpries:
-    state.settings.categoriesconcat(r.category);
+    const cats = state.settings.categories.includes(r.category) ? state.settings.categories:
+    state.settings.categories.concat(r.category); 
     const options = cats.map(c => `<option ${c === r.category ? "selected" : ""}>${ escapeHtml(c)}</option>`).join("");
     return `
     <tr id="editRow" data-id="${escapeHtml(r.id)}">
         <td><input id="editDesc" aria-label="Description" value="${escapeHtml(r.description)}"></td>
-       <td><input id ="editDesc" aria-label="Description" value="${escapeHtml(r.description)}"></td>
+       <td><input id ="editDate" aria-label="Date" value="${escapeHtml(r.date)}"></td>
         <td><select id ="editCat" aria-label="Categpry">${options}</select></td>
         <td><input id ="editAmount" aria-label="Amount" inputmode="decimal" value="${r.amount}"></td>
         <td><button class="btn primary small-btn" data-save="1">Save</button>
@@ -150,8 +150,8 @@ $("recentTransactions").innerHTML = recent.map(r => `
  function renderTransactions(){
  const result= Search.compileRegex($("search").value, $("caseToggle").checked ? "i" : "");
  const re = result.re;
- const list = state.records.filter(r = !re || re.test(`${r.description}
- ${r.category}$ {r.amount.tofixed(2) $(r.date}`))
+ const list = state.records.filter(r => !re || re.test(`${r.description}
+ ${r.category}$ {r.amount.toFixed(2) $(r.date}`))
     .sort(sorters[$("sort").value]);
 
     setText($("searchStatus"), result.error || (re ? list.length + " result(s) found" : "" ));
@@ -160,7 +160,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
         <td>${Search.highlight(r.date, re)}</td>
         <td>${Search.highlight(r.description, re)}</td>
         <td><span class="pill">${Search.highlight(r.category,re)}</span></td>
-        <td><strong>${escapeHtml(state.settings.baseCurrency)} ${Search.hightlight(r.amount.toFixed(2), re)}</strong></td>
+        <td><strong>${escapeHtml(state.settings.baseCurrency)} ${Search.highlight(r.amount.toFixed(2), re)}</strong></td>
         <td><button class="btn small-btn" data-edit="${escapeHtml(r.id)}">Edit</button>
         <button class="btn danger small-btn" data-delete="${escapeHtml(r.id)}"
         aria-label="Delete ${escapeHtml(r.description)}">Delete</button>
@@ -172,7 +172,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
      function renderCategoryOptions() {
      const select =$("category");
      const previous = select.value;
-     select.innerHTML = state.settings.categories.map(c => `<option> value=$ {escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+     select.innerHTML = state.settings.categories.map(c => `<option> value=${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
      if (state.settings.categories.includes(previous))select.value= previous;}
     
      function renderCategoryList() {
@@ -189,8 +189,8 @@ $("recentTransactions").innerHTML = recent.map(r => `
         $("baseCurrency").value = s.baseCurrency;
         $("cur1Code").value = s.currencies[0].code;
         $("cur1Rate").value = s.currencies[0].code;
-        $("cur2Code").value = s.currencies[1].code;
-        $("cur2Rate").value = s.currencies[1].code;
+        $("cur2Code").value = s.currencies[1].rate;
+        $("cur2Rate").value = s.currencies[1].rate;
         $("settingsError").textContent = ""; renderCategoryList();
      }
 
@@ -200,5 +200,5 @@ $("recentTransactions").innerHTML = recent.map(r => `
         renderTransactions();
         renderCategoryOptions();
      }
-      return { $,message,localDate, showView, renderDashboard, renderTransactions, renderCategoryOptions,renderSettings, renderAll, setInlineEdit };
+      return { $,message,localDate, showView, renderDashboard, renderTransactions, renderCategoryOptions,renderSettings,renderCategoryList, renderAll, setInlineEdit };
 })();
