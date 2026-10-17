@@ -28,7 +28,7 @@ function message(text){
         toast.textContent = "";}, 2500);
 }
 
-function showView(id) { document.querySelectorAll(".view").forEach(v => v.classList.add("active"));
+function showView(id) { document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
     $(id).classList.add("active");
 
     document.querySelectorAll("[data-view]").forEach(button => {
@@ -151,7 +151,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
  const result= Search.compileRegex($("search").value, $("caseToggle").checked ? "i" : "");
  const re = result.re;
  const list = state.records.filter(r => !re || re.test(`${r.description}
- ${r.category}$ {r.amount.toFixed(2) $(r.date}`))
+ ${r.category} ${r.amount.toFixed(2)} ${r.date}`))
     .sort(sorters[$("sort").value]);
 
     setText($("searchStatus"), result.error || (re ? list.length + " result(s) found" : "" ));
@@ -172,7 +172,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
      function renderCategoryOptions() {
      const select =$("category");
      const previous = select.value;
-     select.innerHTML = state.settings.categories.map(c => `<option> value=${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+     select.innerHTML = state.settings.categories.map(c => `<option value=${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
      if (state.settings.categories.includes(previous))select.value= previous;}
     
      function renderCategoryList() {
@@ -188,8 +188,8 @@ $("recentTransactions").innerHTML = recent.map(r => `
         $("budgetInput").value = s.budget;
         $("baseCurrency").value = s.baseCurrency;
         $("cur1Code").value = s.currencies[0].code;
-        $("cur1Rate").value = s.currencies[0].code;
-        $("cur2Code").value = s.currencies[1].rate;
+        $("cur1Rate").value = s.currenscies[0].rate;
+        $("cur2Code").value = s.currencies[1].code;
         $("cur2Rate").value = s.currencies[1].rate;
         $("settingsError").textContent = ""; renderCategoryList();
      }

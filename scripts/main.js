@@ -98,12 +98,13 @@ function saveEdits() {
         description: $("editDesc").value,
         amount : $("editAmount").value,
         category : $("editCat").value,
+        date : $("editDate").value
     };
     const error = V.validateRecord(data); if (error) {
         $("editError").textContent = error;
         return;
     }
-    state.updateRecord(id, Object.assign({}, data,{amount: Number(data.amount)}));
+    State.updateRecord(id, Object.assign({}, data,{amount: Number(data.amount)}));
     setInlineEdit(null);
     renderAll();
     focusEditButton(id);
@@ -112,7 +113,7 @@ function saveEdits() {
 }
 
 
-$("transactionsBody").addEventListener("click", evemt => {
+$("transactionsBody").addEventListener("click", event => {
     const edit = event.target.closest("[data-edit]");
     const del = event.target.closest("[data-delete]");
 if(edit) {
@@ -127,14 +128,14 @@ if(del){
     const rec = state .records.find(r => r.id === del.dataset.delete);
     if (rec && confirm('delete "' + rec.description + '"? This cannot be undone.')
 )
-{ state.deleteRecord(rec.id);renderAll();
+{ State.deleteRecord(rec.id);renderAll();
     message("Expense deleted.");}
 }
 
 });
 
 // Enter saves, escape cancels inside the edit
-$("transactionBody").addEventListener("keydown", event => {
+$("transactionsBody").addEventListener("keydown", event => {
     if (!event.target.closest("#editRow")) return;
     if (event.key === "Escape") cancelEdit();
     if (event.key === "Enter" && event.target.tagName === "INPUT") saveEdits();
@@ -183,7 +184,7 @@ message("Category added.");
 $("settingsCategories").addEventListener("click" , event => {
     const button = event.target.closest("[data-remove]");
     if (!button) return;
-    if (state.settings.categpries.length < 2) {
+    if (state.settings.categories.length < 2) {
         message("Keep at least one categpry.");
         return;
     }
