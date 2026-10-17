@@ -4,7 +4,7 @@ const State = (() => {
             budget: 1500000,
             baseCurrency: "Tsh",
             currencies: [{ code: "USD", rate: 0.0004},{code:"EUR", rate: 0.00035}],
-            categories: ["food", "Books", "Transport","Entertainment", "Fees", "others"]
+            categories: ["Food", "Books", "Transport","Entertainment", "Fees", "Others"]
         };
     }
 
@@ -48,7 +48,7 @@ function nextId() {
 
 function addRecord(data) {
     const now = new Date().toISOString();
-    state.records.push(Object.assign({ id: nextId() }, data,{  CreatedAt: now, updatedAt: now }));
+    state.records.push(Object.assign({ id: nextId() }, data,{  createdAt: now, updatedAt: now }));
 persist();
 } 
 

@@ -172,7 +172,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
      function renderCategoryOptions() {
      const select =$("category");
      const previous = select.value;
-     select.innerHTML = state.settings.categories.map(c => `<option value=${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+     select.innerHTML = state.settings.categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
      if (state.settings.categories.includes(previous))select.value= previous;}
     
      function renderCategoryList() {
@@ -188,7 +188,7 @@ $("recentTransactions").innerHTML = recent.map(r => `
         $("budgetInput").value = s.budget;
         $("baseCurrency").value = s.baseCurrency;
         $("cur1Code").value = s.currencies[0].code;
-        $("cur1Rate").value = s.currenscies[0].rate;
+        $("cur1Rate").value = s.currencies[0].rate;
         $("cur2Code").value = s.currencies[1].code;
         $("cur2Rate").value = s.currencies[1].rate;
         $("settingsError").textContent = ""; renderCategoryList();
