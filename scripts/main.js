@@ -33,7 +33,7 @@ async function startApp() {
     return !msg;
    }
 
-fields.foeEach(([id, fn]) => $ (id).addEventListener("input", () => checkField(id, fn)));
+fields.forEach(([id, fn]) => $ (id).addEventListener("input", () => checkField(id, fn)));
 
 function resetForm(){
     $("expenseForm").reset();
@@ -46,14 +46,14 @@ function resetForm(){
 
 $("expenseForm").addEventListener("submit", event => {
     event.preventDefault();
-    const allOk = fields.atmao(([id, fn ]) => checkField(id, fn)).every(Boolean);
+    const allOk = fields.map(([id, fn ]) => checkField(id, fn)).every(Boolean);
     if (!allOk) {
         message("Please fix the errors in the form.");
         return;
     }
 State.addRecord({
     description: $("description").value,
-    amount: Number($("ammount").value),
+    amount: Number($("amount").value),
     category: $("category").value,
     date: $("date").value
 });
@@ -97,22 +97,22 @@ function saveEdits() {
     const data = {
         description: $("editDesc").value,
         amount : $("editAmount").value,
-        category : $("editCat").value
+        category : $("editCat").value,
     };
     const error = V.validateRecord(data); if (error) {
         $("editError").textContent = error;
         return;
     }
-    State.updateRecord(id, Object.assign({}, data,{amount: Number(data, amount)}));
-    setInlineEdit(nul);
+    state.updateRecord(id, Object.assign({}, data,{amount: Number(data.amount)}));
+    setInlineEdit(null);
     renderAll();
     focusEditButton(id);
     message("Expense updated.");
-    message("Expense updated.");
+
 }
 
 
-$("transactionBody").addEventListener("click", evemt => {
+$("transactionsBody").addEventListener("click", evemt => {
     const edit = event.target.closest("[data-edit]");
     const del = event.target.closest("[data-delete]");
 if(edit) {
@@ -137,7 +137,7 @@ if(del){
 $("transactionBody").addEventListener("keydown", event => {
     if (!event.target.closest("#editRow")) return;
     if (event.key === "Escape") cancelEdit();
-    if (event.key === "Enter" && event.target.tagName === "INPUT") saveEdit();
+    if (event.key === "Enter" && event.target.tagName === "INPUT") saveEdits();
 
 });
 
@@ -146,11 +146,11 @@ $("transactionBody").addEventListener("keydown", event => {
 $("saveSettings").addEventListener("click", () => {
     const cap = $("budgetInput").value.trim();
     const base = $("baseCurrency").value.trim();
-    const c1 = $("cur1Code").value.trim(), r1 = $("cur2Rate").value.trim();
+    const c1 = $("cur1Code").value.trim(), r1 = $("cur1Rate").value.trim();
     const c2 = $("cur2Code").value.trim(), r2 = $("cur2Rate").value.trim();
 
-    const error = V.validateCap(cap) || V.validateCurrencyCodes(base) || V.validateCurrencyCode(c1) || V.validateRate(r1) || V.validateRate(r2);
-     $("settinngsError").textContent = error;
+    const error = V.validateCap(cap) || V.validateCurrencyCode(base) || V.validateCurrencyCode(c1) || V.validateCurrencyCode(c2) || V.validateRate(r1) || V.validateRate(r2);
+     $("settingsError").textContent = error;
      if (error) return;
 
      state.settings.budget = Number(cap);
@@ -163,7 +163,7 @@ $("saveSettings").addEventListener("click", () => {
 });
 
 //settings: categories
-$("addCategpry").addEventListener("click", () => {
+$("addCategory").addEventListener("click", () => {
     const name = $("newCategory").value;
     const msg = V.validateCategory(name);
  const exists = state.settings.categories.some(c => c.toLowerCase() ===name.toLowerCase());

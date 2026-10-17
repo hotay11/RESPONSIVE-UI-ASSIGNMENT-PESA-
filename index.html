@@ -78,7 +78,7 @@
                             <div class="progress-bar" id="budgetBar"></div>
                         </div>
                         <p class="muted small" id="capPolite" role="status"></p>
-                        <p class="small cap-alert" id="capAlert"></p>
+                        <p class="small cap-alert" id="capAlert" role="capAlert"></p>
             </section>
             <section class="card panel" aria-labelledby="catTittle">
                 <div class="panel-head">
@@ -179,7 +179,7 @@
                 </div>
                 <div class="button-row">
                     <button type="button" class="btn" id="cancel">Cancel</button>
-                    <button type="submit" class="btn-primary" id="submitExpense">Add Expense</button>
+                    <button type="submit" class="btn primary" id="submitExpense">Add Expense</button>
                 </div>
             </div>
         </form>
@@ -211,27 +211,27 @@
                 </div>
                 <div class="setting-row">
                     <label for="cur2Code" inputmode="decimals">Currency 3 code</label>
-                    <input id="cur2Code" inputmode="decimal">
+                    <input id="cur2Code" max-length="5">
                 </div>
-                <div class="field-erroe" id="settingsError" role="alert"></div>
+                <div class="field-error" id="settingsError" role="alert"></div>
                 <div class="button-row">
                     <button class="btn primary" id="saveSettings">Save Settings</button>
                 </div>
             </section>
-            <section class="card nfo-card" aria-labelledby="catSetTittle">
+            <section class="card info-card" aria-labelledby="catSetTittle">
                 <h2 id="catSetTittle">Categories</h2>
                 <p class="muted small">Add or remove Expense categories</p>
-                <div id="settingsCategory"></div>
+                <div id="settingsCategories"></div>
                 <div class="setting-row">
                     <label for="newCategory">New category</label>
-                    <input id="newCategory" ariadescribedby="newCategoryError" autocomplete="off">
+                    <input id="newCategory" aria-describedby="newCategoryError" autocomplete="off">
                     <div class="field-error" id="newCategoryError"></div>
                 </div>
                 <div class="button-row">
                     <button class="btn" id="addCategory">+ Add Categpry</button>
                 </div>
             </section>
-            <section class="card info-card" arialabelledby="datatittle">
+            <section class="card info-card" aria-labelledby="dataTittle">
                 <h2 id="dataTittle">Data</h2>
                 <p class="muted small">save a copy of your records or restore starter data</p>
                 <div class="button-row">
@@ -240,7 +240,7 @@
                 </div>
                 <div class="setting-row">
                     <label for="importFile">Import JSON file</label>
-                    <input type="file" id="importFile" accept="application/json..json">
+                    <input type="file" id="importFile" accept="application/json,.json">
                     <p id="importMessage" role="status" class="small"></p>
                 </div>
             </section>
@@ -248,7 +248,7 @@
        </section>
 
        <!----ABOUT---->
-       <section id="about" class="view" aria-labellebdy="abouttitle">
+       <section id="about" class="view" aria-labellebdy="aboutTitle">
         <div class="heading">
             <div class="eyebrow">About</div>
             <h1 id="aboutTitle">About PESA</h1>
@@ -257,7 +257,7 @@
         <div class="info-grid">
             <article class="card info-card">
                 <h2>What is PESA</h2>
-                <p class="mute mt">PESA helps students reocrd expenses understand spending patterns and stay within a personal spending cap.</p>
+                <p class="muted mt">PESA helps students reocrd expenses understand spending patterns and stay within a personal spending cap.</p>
                 <ul class="plain-list">
                     <li>Expense tracking with validated forms</li>
                     <li>Regex searching and sorting</li>
