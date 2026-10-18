@@ -8,7 +8,7 @@ Student Finance Tracker (Summative – Building Responsive UI) was selected as t
 |---|---|
 | Demo video (unlisted) | https://youtu.be/li_cpJpTRMQ |
 | Repository | https://github.com/hotay11/RESPONSIVE-UI-ASSIGNMENT-PESA- |
-| Author(s) | GitHub hotay11, Email: j.hotay@alustudent.com |
+| Author(s) | GitHub : hotay11 , Email: j.hotay@alustudent.com |
 
 ---
 
