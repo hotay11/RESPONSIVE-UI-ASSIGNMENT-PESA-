@@ -212,9 +212,9 @@ Repeat step 2, adding an expense whose name includes the same word twice, e.g., 
 
 ---
 
-No items are found for AI usage.There are no reports for AI usage in CodeVibe.
 
-The programming of this project was done by myself. I will tell you two things first:
+
+The programming of this project was done by myself. 
 
 
 - **The CodeVibe report.** I'm worried my CodeVibe report might be off since I think it has picked up some non-activity time, and that's why the AI-authorship is higher than it actually is.  The code is in the form of a step-by-step development process, as evidenced by my git history and commit dates, and I am willing to describe any file in a viva.
